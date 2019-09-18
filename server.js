@@ -2,12 +2,6 @@ const config = require('./config');
 const WebSocket = require('ws');
 const zmq = require('zeromq');
 
-const dealerSocket = zmq.socket('router');
-dealerSocket.connect(config.zmq.mediaUri);
-dealerSocket.on('message', function(address, to, from, timestamp, message) {
-  pubSocket.send([to, from, timestamp, message]);
-})
-
 console.log('binding websocket server to port ' + config.webSocket.port);
 const wss = new WebSocket.Server({ port: config.webSocket.port });
 wss.on('connection', function connection(ws, req) {
