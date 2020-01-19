@@ -53,6 +53,7 @@ wss.on('connection', function connection(ws, req) {
   const eventSocket = zmq.socket('sub');
   eventSocket.connect(config.zmq.mediaEventUri);
   eventSocket.subscribe('APIEVENT|' + apiKey);
+  eventSocket.subscribe('MEDIAEVENT|' + apiKey);
   eventSocket.on('message', function(topic, message) {
     message = message.toString();
     try {
