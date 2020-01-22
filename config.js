@@ -4,6 +4,7 @@ module.exports = {
     mediaEventUri: "tcp://127.0.0.1:2998"
   },
   webSocket: {
+    ip: "127.0.0.1",
     port: 3000,
     keepAliveIntervalMs: 10000
   },

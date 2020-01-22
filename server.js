@@ -21,12 +21,18 @@ function removeApiKeyFromResponseObject(msg, apiKey) {
 }
 
 console.log('binding websocket server to port ' + config.webSocket.port);
-const wss = new WebSocket.Server({ port: config.webSocket.port });
+const wss = new WebSocket.Server({ host: config.webSocket.ip, port: config.webSocket.port });
 wss.on('connection', function connection(ws, req) {
-  const apiKey = req.url.substring(1);
+  const temp = req.url.split('/');
+  if (!temp || !temp.length) return;
+  
+  const apiKey = temp[temp.length -1 ];
+  console.log('apiKey ' + apiKey);
   if (config.apiKeys.length > 0) {
-    if (!apiKey) return;
-    if (config.apiKeys.indexOf(apiKey) === -1) return;
+    if (!apiKey || (config.apiKeys.indexOf(apiKey) === -1)) {
+      ws.close();
+      return;
+    }
   }
 
   console.log('new websocket connection with apiKey ' + apiKey);
